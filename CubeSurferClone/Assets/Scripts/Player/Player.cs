@@ -1,56 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
+using Dreamteck.Splines;
 using UnityEngine;
 
 namespace Player
 {
-    [System.Serializable]
-    public class Properties
-    {
-        public DynamicJoystick dynamicJoystick;
-        public Transform childModel;
-        public Transform cubeHolder;
-        public float speed;
-    }
     public class Player : MonoBehaviour
     {
-        [SerializeField] Properties properties;
+        public static Player instance { get; private set; }
+        public PlayerProperties properties = new PlayerProperties();
         PlayerMovement playerMovement;
         PlayerMovementInput playerMovementInput;
-
+        PlayerCollider playerCollider;
+        PlayerChildTransform playerChild;
+        PlayerCubeHolder playerCube;
+        PlayerChildRaycast playerChildRaycast;
+        PlayerTrail playerTrail;
+        private void Awake()
+        {
+            if (!instance)
+                instance = this;
+        }
         private void Start()
         {
             playerMovementInput = new PlayerMovementInput(properties.dynamicJoystick);
-            playerMovement = new PlayerMovement(properties.speed, properties.childModel.transform, playerMovementInput);
+            playerMovement = new PlayerMovement(properties.moveSpeed, properties.moveObject.transform, playerMovementInput);
+            playerCollider = new PlayerCollider(properties);
+            playerChild = new PlayerChildTransform(properties.childModel.transform);
+            playerCube = new PlayerCubeHolder(properties);
+            playerChildRaycast = new PlayerChildRaycast(playerChild);
+            playerTrail = new PlayerTrail(properties.trailRenderer);
+            playerTrail.SetColor(properties.childModel.GetComponent<MeshRenderer>().material.color);
         }
         private void FixedUpdate()
         {
             playerMovement.Move();
         }
-
         private void OnCollisionEnter(Collision collision)
         {
-            if(collision.gameObject.tag == "Cube" && collision.gameObject.tag != "GotCube")
-            {
-                collision.gameObject.tag = "GotCube";
-                properties.childModel.transform.localPosition += new Vector3(0, 1, 0);
-                collision.transform.SetParent(properties.cubeHolder);
-                collision.gameObject.transform.localPosition = Vector3.zero;
-                for (int i = 0; i < properties.cubeHolder.transform.childCount; i++)
-                {
-                    properties.cubeHolder.transform.GetChild(i).gameObject.transform.localPosition += new Vector3(0, 1, 0);
-                }
-            }
-            else if(collision.gameObject.tag == "Obstacle")
-            {
-                collision.gameObject.tag = "Untagged";
-                Destroy(properties.cubeHolder.transform.GetChild(properties.cubeHolder.transform.childCount-1).gameObject);
-                properties.childModel.transform.localPosition -= new Vector3(0, 1, 0);
-                for (int i = 0; i < properties.cubeHolder.transform.childCount; i++)
-                {
-                    properties.cubeHolder.transform.GetChild(i).gameObject.transform.localPosition -= new Vector3(0, 1, 0);
-                }
-            }
+            StartCoroutine(playerCollider.CollisionEnter(collision));
+        }
+        public void ChildAddLocalPos(Vector3 addPos)
+        {
+            playerChild.AddLocalPosition(addPos);
+        }
+        public void CheckAllCollectable()
+        {
+            playerCube.CheckAll();
+            playerChildRaycast.CheckSelf();
+        }
+        public void SetTrailColor(Color color)
+        {
+            playerTrail.SetColor(color);
         }
     }
 }

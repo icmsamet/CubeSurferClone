@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3506047e65e5fe4d8b527a63ac76963, type: 3}
+  m_Name: LevelDesignerProperties
+  m_EditorClassIdentifier: 
+  obstacle: {fileID: 1804693616930119713, guid: ac8429844fdb2b04fb94ec1571a9ef96, type: 3}
+  collectable: {fileID: 6868606739782854959, guid: 89952a22db650294c8e2b634d1949f4c, type: 3}
+  levelEnd: {fileID: 1074188580108625506, guid: f5f4d99f4a9e6964d9bad216ecaa1a3d, type: 3}
+  stair: {fileID: 4274748851184606507, guid: da4f8babdc8562d41a2deac794b53c60, type: 3}

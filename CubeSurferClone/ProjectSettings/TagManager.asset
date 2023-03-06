@@ -4,9 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Cube
-  - GotCube
   - Obstacle
+  - Collectable
+  - Collected
+  - Stair
+  - Platform
   layers:
   - Default
   - TransparentFX
