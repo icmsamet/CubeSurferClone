@@ -30,14 +30,15 @@ namespace GameManager
         }
         private void Start()
         {
-            managerPlayer = new GameManagerPlayer(player.properties);
+            managerPlayer = new GameManagerPlayer(player);
             managerPlayer.StopGame();
             managerScore = new GameManagerScore(score, scoreText);
             managerScore.StartScore();
             StartPanelState(true);
             FailPanelState(false);
             levelLoader = new GameManagerLevelSpawner();
-            //levelLoader.SpawnLevel(levelID);
+            levelLoader.SpawnLevel(levelID);
+            managerPlayer.SetSpline();
         }
 
         public void StartGame()

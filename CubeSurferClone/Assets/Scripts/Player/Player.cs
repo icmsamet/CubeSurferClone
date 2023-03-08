@@ -53,5 +53,9 @@ namespace Player
         {
             playerTrail.SetColor(color);
         }
+        public void SetSpline()
+        {
+            properties.splineFollower.spline = FindObjectOfType<SplineComputer>();
+        }
     }
 }

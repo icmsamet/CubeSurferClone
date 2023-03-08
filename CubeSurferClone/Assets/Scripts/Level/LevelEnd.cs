@@ -2,22 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using GameManager;
 
 namespace Level
 {
     public class LevelEnd : MonoBehaviour
     {
         [SerializeField]LevelDesignerProperties properties;
+        [SerializeField] GameSettings settings;
 
         [Range(1, 10)]
-        [OnValueChanged("ChangeStairs")][SerializeField] int stairCount = 1;
-        [Range(1,10)]
-        [OnValueChanged("ChangeStairs")][SerializeField] float scaleY = 1;        
+        [OnValueChanged("ChangeStairs")][SerializeField] int stairCount = 1;   
         [Range(1,10)]
         [OnValueChanged("ChangeStairs")][SerializeField] float scaleZ = 1;
         void ChangeStairs()
         {
             properties = Resources.Load<LevelDesignerProperties>("LevelDesignerProperties");
+            settings = Resources.Load<GameSettings>("Game Settings");
             //var mesh = transform.root.gameObject;
             var mesh = FindObjectOfType<Level>().gameObject;
             while (transform.childCount != 0)
@@ -28,7 +29,7 @@ namespace Level
             {
                 Stair.Stair stair = Instantiate(properties.stair);
                 stair.transform.SetParent(this.transform);
-                stair.transform.localScale = new Vector3(GetObjectBoundSizes(mesh.gameObject).x, scaleY, scaleZ);
+                stair.transform.localScale = new Vector3(GetObjectBoundSizes(mesh.gameObject).x, settings.collectableOffset, scaleZ);
                 if (i != 0)
                 {
                     var beforeObj = transform.GetChild(i - 1);
@@ -46,7 +47,7 @@ namespace Level
             platform.transform.SetParent(this.transform);
             platform.tag = "Platform";
             var lastObj = transform.GetChild(transform.childCount - 2).gameObject;
-            platform.transform.localScale = new Vector3(GetObjectBoundSizes(mesh.gameObject).x*2, scaleY, scaleZ*2);
+            platform.transform.localScale = new Vector3(GetObjectBoundSizes(mesh.gameObject).x*2, settings.collectableOffset, scaleZ*2);
             platform.transform.localPosition = new Vector3(lastObj.transform.localPosition.x, lastObj.transform.localPosition.y,
                  lastObj.transform.localPosition.z + (GetObjectBoundSizes(lastObj).z*1.5f));
 

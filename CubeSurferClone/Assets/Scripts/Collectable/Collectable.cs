@@ -6,7 +6,8 @@ namespace Collectable
 {
     public class Collectable : MonoBehaviour
     {
-        CollectableCollider collider;
+        CollectableCollider collectableCollider;
+        CollectableColor collectableColor;
 
         [OnValueChanged("SetColor")]
         public Color color = Color.white;
@@ -15,19 +16,18 @@ namespace Collectable
 
         private void Start()
         {
-            collider = new CollectableCollider(this);
+            collectableCollider = new CollectableCollider(this);
+            SetColor();
         }
         public void SetColor()
         {
             meshRenderer = GetComponent<MeshRenderer>();
-
-            var tempMaterial = new Material(meshRenderer.sharedMaterial);
-            tempMaterial.color = color;
-            meshRenderer.sharedMaterial = tempMaterial;
+            collectableColor = new CollectableColor(meshRenderer);
+            collectableColor.SetColor(color);
         }
         private void OnCollisionEnter(Collision collision)
         {
-            collider.CollisionEnter(collision);
+            collectableCollider.CollisionEnter(collision);
         }
         public void CheckSelf()
         {

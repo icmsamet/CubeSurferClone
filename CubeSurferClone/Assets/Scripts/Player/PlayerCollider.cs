@@ -36,6 +36,22 @@ namespace Player
                     GameManager.GameManager.instance.FailGame();
                 }
             }
+            else if(collision.gameObject.tag == "Stair")
+            {
+                if (m_Properties.cubeHolder.transform.childCount > 0)
+                {
+                    var distance = GetZBoundSize(m_Properties.childModel.transform);
+                    var speed = m_SplineFollower.followSpeed;
+                    var t = distance / speed;
+                    yield return new WaitForSeconds(t);
+                    Player.instance.CheckAllCollectable();
+                    //collision.gameObject.tag = "Untagged";
+                }
+                else
+                {
+                    GameManager.GameManager.instance.FailGame();
+                }
+            }
         }
 
         float GetZBoundSize(Transform obj)

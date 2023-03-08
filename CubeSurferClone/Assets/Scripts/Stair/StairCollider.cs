@@ -19,8 +19,7 @@ namespace Stair
                 }
                 else
                 {
-                    if (GameManager.GameManager.instance.CheckStart())
-                        GameManager.GameManager.instance.FailGame();
+                    GameManager.GameManager.instance.WinGame();
                 }
             }
         }

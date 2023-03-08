@@ -7,5 +7,6 @@ namespace GameManager
     {
         public float playerMoveSpeed;
         public float playerFollowSpeed;
+        public float collectableOffset;
     }
 }

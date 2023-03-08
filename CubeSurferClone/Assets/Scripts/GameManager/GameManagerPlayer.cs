@@ -9,9 +9,11 @@ namespace GameManager
     public class GameManagerPlayer
     {
         PlayerProperties playerProperties;
-        public GameManagerPlayer(PlayerProperties _playerProperties)
+        Player.Player player;
+        public GameManagerPlayer(Player.Player _player)
         {
-            playerProperties = _playerProperties;
+            player = _player;
+            playerProperties = player.properties;
         }
 
         public void SetPlayerSpeeds(float moveSpeed,float followSpeed)
@@ -30,6 +32,10 @@ namespace GameManager
         public void StopGame()
         {
             SetPlayerSpeeds(0, 0);
+        }
+        public void SetSpline()
+        {
+            player.SetSpline();
         }
     }
 }

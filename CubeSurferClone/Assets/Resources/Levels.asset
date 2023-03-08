@@ -12,6 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36eedc0cf06522e47938e13476c218b2, type: 3}
   m_Name: Levels
   m_EditorClassIdentifier: 
-  properties:
-  - levelID: 0
-    prefab: {fileID: 0}
+  properties: []

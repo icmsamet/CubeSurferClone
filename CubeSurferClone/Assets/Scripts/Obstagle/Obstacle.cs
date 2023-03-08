@@ -8,8 +8,9 @@ namespace Obstacle
     [RequireComponent(typeof(Rigidbody))]
     public class Obstacle : MonoBehaviour
     {
-        ObstacleRigidbody rigidbody;
-        ObstacleCollider collider;
+        ObstacleRigidbody obstacleRigidbody;
+        ObstacleCollider obstacleCollider;
+        ObstacleColor obstacleColor;
 
         [SerializeField] GameObject m_SingeObs;
         [SerializeField] GameObject m_TwinObs;
@@ -21,10 +22,11 @@ namespace Obstacle
 
         private void Start()
         {
-            collider = new ObstacleCollider();
-            rigidbody = new ObstacleRigidbody(GetComponent<Rigidbody>());
-            rigidbody.SetConstains(RigidbodyConstraints.FreezeAll);
-            rigidbody.SetGravity(false);
+            obstacleCollider = new ObstacleCollider();
+            obstacleRigidbody = new ObstacleRigidbody(GetComponent<Rigidbody>());
+            obstacleRigidbody.SetConstains(RigidbodyConstraints.FreezeAll);
+            obstacleRigidbody.SetGravity(false);
+            SetColor();
         }
         public void ChangeObs()
         {
@@ -47,17 +49,12 @@ namespace Obstacle
         public void SetColor()
         {
             meshRenderer = GetComponentsInChildren<MeshRenderer>();
-
-            foreach (var item in meshRenderer)
-            {
-                var tempMaterial = new Material(item.sharedMaterial);
-                tempMaterial.color = color;
-                item.sharedMaterial = tempMaterial;
-            }
+            obstacleColor = new ObstacleColor(meshRenderer);
+            obstacleColor.SetColor(color);
         }
         private void OnCollisionEnter(Collision collision)
         {
-            collider.CollisionEnter(collision);
+            obstacleCollider.CollisionEnter(collision);
         }
     }
 }

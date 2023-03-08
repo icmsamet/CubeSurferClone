@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Stair
@@ -7,20 +8,33 @@ namespace Stair
     [RequireComponent(typeof(Rigidbody))]
     public class Stair : MonoBehaviour
     {
-        StairRigidbody rigidbody;
-        StairCollider collider;
+        StairRigidbody stairRigidbody;
+        StairCollider stairCollider;
+        StairColor stairColor;
+
+
+        [OnValueChanged("SetColor")]
+        public Color color = Color.white;
+        MeshRenderer meshRenderer;
 
         private void Start()
         {
-            collider = new StairCollider();
-            rigidbody = new StairRigidbody(GetComponent<Rigidbody>());
-            rigidbody.SetConstains(RigidbodyConstraints.FreezeAll);
-            rigidbody.SetGravity(false);
+            stairCollider = new StairCollider();
+            stairRigidbody = new StairRigidbody(GetComponent<Rigidbody>());
+            stairRigidbody.SetConstains(RigidbodyConstraints.FreezeAll);
+            stairRigidbody.SetGravity(false);
+            SetColor();
         }
-
+        public void SetColor()
+        {
+            meshRenderer = GetComponent<MeshRenderer>();
+            stairColor = new StairColor(meshRenderer);
+            stairColor.SetColor(color);
+        }
         private void OnCollisionEnter(Collision collision)
         {
-            collider.CollisionEnter(collision);
+            if (GameManager.GameManager.instance.CheckStart())
+                stairCollider.CollisionEnter(collision);
         }
     }
 }

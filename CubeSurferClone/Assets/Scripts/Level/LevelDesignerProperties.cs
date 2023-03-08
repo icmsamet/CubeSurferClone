@@ -9,5 +9,8 @@ namespace Level
         public Collectable.Collectable collectable;
         public LevelEnd levelEnd;
         public Stair.Stair stair;
+        public Material collectableMaterial;
+        public Material obstacleMaterial;
+        public Material stairMaterial;
     }
 }
