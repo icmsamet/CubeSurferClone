@@ -3,6 +3,7 @@
 Hello!
 
 This project is a clone of the popular mobile game "Cube Surfer" that I created using the Unity game engine. The purpose of this project was to experiment with different mechanics in Unity and also practice making a fun game.
+Unity 2021.3.11f1
 
 ## About Game
 Cube Surfer is an endless runner game where players move on a cube and try to make it bigger by overcoming obstacles on the way. Players use swipe gestures to move the cube and try to cover as much distance as possible without colliding with the obstacles on the road.
